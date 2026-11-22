@@ -41,12 +41,7 @@
       background: #0d1322;
       border-bottom: 1px solid #1f2b44;
     }
-    .subject-tag {
-      font-size: 13px;
-      font-weight: 700;
-      color: #38bdf8;
-      letter-spacing: 0.04em;
-    }
+    .subject-tag { font-size: 13px; font-weight: 700; color: #38bdf8; }
     .gauge-pill {
       background: #1e293b;
       border: 1px solid #38bdf8;
@@ -56,103 +51,99 @@
       font-size: 14px;
       font-weight: 700;
     }
-    /* 3D 무대 + 그 위에 뜨는 짤 오버레이 영역 */
     .stage-wrap {
       position: relative;
       width: 100%;
-      height: 310px;
+      height: 280px;
       background: radial-gradient(circle at 50% 25%, #1e3a8a 0%, #090d16 80%);
       overflow: hidden;
     }
-    #stage-3d {
-      width: 100%;
-      height: 100%;
-    }
-    /* 클릭 시 튀어나오는 짤/반응 카드 */
+    #stage-3d { width: 100%; height: 100%; }
     .meme-popup {
       position: absolute;
       top: 16px;
       right: 16px;
-      width: 170px;
+      width: 165px;
       background: rgba(15, 23, 42, 0.92);
       border: 2px solid #38bdf8;
       border-radius: 16px;
       padding: 8px;
       text-align: center;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
       display: none;
       z-index: 10;
     }
-    .meme-popup img, .meme-popup video {
+    .meme-popup img {
       width: 100%;
-      height: 110px;
+      height: 100px;
       object-fit: cover;
       border-radius: 10px;
       background: #1e293b;
     }
-    .meme-caption {
-      margin-top: 6px;
-      font-size: 12px;
-      font-weight: 700;
-      color: #f8fafc;
-    }
-    .body-panel {
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-    .question-title {
-      font-size: 19px;
-      font-weight: 800;
-      line-height: 1.4;
-      color: #ffffff;
-    }
+    .meme-caption { margin-top: 6px; font-size: 12px; font-weight: 700; }
+    .body-panel { padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+    .question-title { font-size: 18.5px; font-weight: 800; line-height: 1.4; }
     .feedback-banner {
       background: #0d1322;
       border-left: 4px solid #38bdf8;
-      padding: 14px 16px;
+      padding: 13px 16px;
       border-radius: 12px;
-      font-size: 14.5px;
+      font-size: 14px;
       line-height: 1.55;
       color: #cbd5e1;
     }
-    .choices {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-    @media (max-width: 600px) {
-      .choices { grid-template-columns: 1fr; }
-    }
+    .choices { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    @media (max-width: 600px) { .choices { grid-template-columns: 1fr; } }
     .choice-btn {
-      padding: 14px 12px;
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 14px;
-      font-size: 14px;
+      padding: 13px 10px;
+      border: none;
+      border-radius: 12px;
+      font-size: 13.5px;
       font-weight: 700;
       cursor: pointer;
       color: #0f172a;
-      transition: transform 0.12s, filter 0.12s;
     }
-    .choice-btn:hover { filter: brightness(1.08); }
     .c0 { background: #38bdf8; }
     .c1 { background: #fbbf24; }
     .c2 { background: #c084fc; color: #fff; }
+    /* 학생 정보 입력 및 GAS 시트 전송 바 */
+    .submit-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1.3fr;
+      gap: 10px;
+      padding-top: 12px;
+      border-top: 1px solid #1f2b44;
+    }
+    @media (max-width: 600px) { .submit-bar { grid-template-columns: 1fr; } }
+    .submit-bar input {
+      background: #0d1322;
+      border: 1px solid #334155;
+      color: #f8fafc;
+      padding: 11px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    .submit-btn {
+      background: #10b981;
+      color: #052e16;
+      font-weight: 800;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
   </style>
 </head>
 <body>
   <div class="app-card">
     <div class="header">
-      <div>
-        <div class="subject-tag" id="lesson-tag">통합사회 · 공론장 시뮬레이션</div>
-      </div>
-      <div class="gauge-pill" id="metric-display">합의 지수: 50점</div>
+      <div class="subject-tag" id="lesson-tag">통합사회 · 공론장 시뮬레이션</div>
+      <div class="gauge-pill" id="metric-display">공론·탐구 지수: 50점</div>
     </div>
 
     <div class="stage-wrap">
       <div id="stage-3d"></div>
-      <!-- 학생 선택 시 반응형 짤이 팝업되는 영역 -->
       <div class="meme-popup" id="meme-popup">
         <img id="meme-img" src="" alt="반응 이미지" />
         <div class="meme-caption" id="meme-caption">반응 캡션</div>
@@ -162,9 +153,15 @@
     <div class="body-panel">
       <div class="question-title" id="question-title">질문 로딩 중...</div>
       <div class="feedback-banner" id="feedback-banner">
-        학생이 아래 선택지를 누르면 3D 아고라 기둥·중앙 코어와 반응 짤이 실시간으로 바뀝니다.
+        입장을 클릭해 3D 무대 변화를 확인한 뒤, 아래에 학번·이름을 입력하고 시트로 제출하세요.
       </div>
       <div class="choices" id="choices-box"></div>
+
+      <div class="submit-bar">
+        <input type="text" id="student-id" placeholder="학번 (예: 10315)" />
+        <input type="text" id="student-name" placeholder="이름 (예: 홍길동)" />
+        <button class="submit-btn" id="submit-btn" onclick="submitToSheet()">시트로 결과 제출</button>
+      </div>
     </div>
   </div>
 
@@ -172,7 +169,12 @@
     import * as THREE from 'three';
 
     // =========================================================
-    // [수업 교사용 설정 블록] 이 부분만 수정하면 다른 수업용으로 즉시 전환!
+    // 1. 여기에 Step 1에서 발급받은 GAS 웹 앱 URL을 붙여넣으세요!
+    // =========================================================
+    const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwUUFlDJ5PP_raLYOWSYdR0qJMcsWUObQg3PsI_cmwajbTxEXOvbZ8HeRJbwl7zq7MOXA/exec";
+
+    // =========================================================
+    // 2. 수업 교사용 설정 블록 (수업마다 여기만 수정)
     // =========================================================
     const LESSON_DATA = {
       tag: "통합사회 · 독도 & 공론장 탐구",
@@ -187,9 +189,8 @@
           cssColor: "#38bdf8",
           speed: 2.4,
           camZ: 4.3,
-          feedback: "기술 기반 대체 경험을 선택했습니다! 울릉도 현지에서도 입도 실패를 학습 경험으로 전환할 수 있습니다.",
-          // 저장소에 올린 파일명(예: './agree.gif')으로 교체해 보세요!
-          mediaUrl: "https://media.giphy.com/media/111ebonMs90YLu/giphy.gif",
+          feedback: "기술 기반 대체 경험을 선택했습니다! 입도 실패를 학습 경험으로 전환할 수 있습니다.",
+          mediaUrl: "./13423066417464807.jpg",
           caption: "굿 아이디어! 현장 몰입 UP"
         },
         {
@@ -200,7 +201,7 @@
           speed: 0.8,
           camZ: 5.6,
           feedback: "접근성은 높아질 수 있으나 안전·해상 기상 리스크가 커져 신중한 검토가 필요합니다.",
-          mediaUrl: "https://media.giphy.com/media/3o7btPCcdNniyf0ArS/giphy.gif",
+          mediaUrl: "./13423066417464807.jpg",
           caption: "잠깐! 안전 변수를 따져보자"
         },
         {
@@ -211,19 +212,19 @@
           speed: 3.2,
           camZ: 3.8,
           feedback: "직접 방문하지 않고도 통계와 근거로 독도를 탐구하는 지속가능한 교육 모델을 선택했습니다!",
-          mediaUrl: "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif",
+          mediaUrl: "./13423066417464807.jpg",
           caption: "데이터 탐구력 폭발!"
         }
       ]
     };
 
-    // UI 초기 세팅
     let score = LESSON_DATA.initialScore;
+    let lastSelectedLabel = "미선택";
     document.getElementById('lesson-tag').textContent = LESSON_DATA.tag;
     document.getElementById('question-title').textContent = LESSON_DATA.question;
     document.getElementById('metric-display').textContent = `${LESSON_DATA.metricName}: ${score}점`;
 
-    // Three.js 아고라 무대(바닥 원판 + 6개 신전 기둥 + 중앙 코어) 구성
+    // Three.js 아고라 3D 무대
     const container = document.getElementById('stage-3d');
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
@@ -240,69 +241,109 @@
     dirLight.position.set(4, 6, 5);
     scene.add(dirLight);
 
-    // 아고라 원형 단상
-    const baseGeo = new THREE.CylinderGeometry(2.2, 2.4, 0.22, 32);
-    const baseMat = new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.6 });
-    const baseMesh = new THREE.Mesh(baseGeo, baseMat);
+    const baseMesh = new THREE.Mesh(
+      new THREE.CylinderGeometry(2.2, 2.4, 0.22, 32),
+      new THREE.MeshStandardMaterial({ color: 0x1e293b, roughness: 0.6 })
+    );
     baseMesh.position.y = -1.0;
     scene.add(baseMesh);
 
-    // 원형으로 배치된 6개의 아고라 기둥
     const pillars = [];
     const pillarGeo = new THREE.CylinderGeometry(0.11, 0.13, 1.5, 16);
     for (let i = 0; i < 6; i++) {
       const angle = (i / 6) * Math.PI * 2;
-      const pMat = new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.4 });
-      const pillar = new THREE.Mesh(pillarGeo, pMat);
+      const pillar = new THREE.Mesh(pillarGeo, new THREE.MeshStandardMaterial({ color: 0x94a3b8, roughness: 0.4 }));
       pillar.position.set(Math.cos(angle) * 1.75, -0.15, Math.sin(angle) * 1.75);
       scene.add(pillar);
       pillars.push(pillar);
     }
 
-    // 중앙 공론 코어
-    const coreGeo = new THREE.OctahedronGeometry(0.75, 0);
-    const coreMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.2, metalness: 0.3 });
-    const coreMesh = new THREE.Mesh(coreGeo, coreMat);
+    const coreMesh = new THREE.Mesh(
+      new THREE.OctahedronGeometry(0.75, 0),
+      new THREE.MeshStandardMaterial({ color: 0x38bdf8, roughness: 0.2, metalness: 0.3 })
+    );
     coreMesh.position.y = 0.25;
     scene.add(coreMesh);
 
     let spinSpeed = 0.012;
 
-    // 선택지 버튼 동적 생성
     const choicesBox = document.getElementById('choices-box');
     LESSON_DATA.options.forEach((opt, idx) => {
       const btn = document.createElement('button');
       btn.className = `choice-btn c${idx}`;
       btn.textContent = opt.label;
-      btn.onclick = () => selectOption(opt);
+      btn.onclick = () => {
+        score += opt.delta;
+        lastSelectedLabel = opt.label;
+        spinSpeed = 0.012 * opt.speed;
+        coreMatColor(opt.color);
+
+        document.getElementById('metric-display').textContent = `${LESSON_DATA.metricName}: ${score}점`;
+        const banner = document.getElementById('feedback-banner');
+        banner.style.borderLeftColor = opt.cssColor;
+        banner.textContent = opt.feedback;
+
+        const popup = document.getElementById('meme-popup');
+        popup.style.display = 'block';
+        popup.style.borderColor = opt.cssColor;
+        document.getElementById('meme-img').src = opt.mediaUrl;
+        document.getElementById('meme-caption').textContent = opt.caption;
+
+        gsap.fromTo(popup, { scale: 0.5, rotation: -6, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.4, ease: 'back.out(2.2)' });
+        gsap.fromTo(coreMesh.scale, { x: 0.7, y: 0.7, z: 0.7 }, { x: 1.15, y: 1.15, z: 1.15, duration: 0.35, yoyo: true, repeat: 1 });
+        gsap.to(camera.position, { z: opt.camZ, duration: 0.6, ease: 'power2.out' });
+      };
       choicesBox.appendChild(btn);
     });
 
-    function selectOption(opt) {
-      score += opt.delta;
-      spinSpeed = 0.012 * opt.speed;
-      coreMat.color.setHex(opt.color);
-      pillars.forEach(p => p.material.color.setHex(opt.color));
-
-      // 점수 & 피드백 갱신
-      document.getElementById('metric-display').textContent = `${LESSON_DATA.metricName}: ${score}점`;
-      const banner = document.getElementById('feedback-banner');
-      banner.style.borderLeftColor = opt.cssColor;
-      banner.textContent = opt.feedback;
-
-      // 짤 팝업 띄우기 + GSAP 플래시식 탄성 모션
-      const popup = document.getElementById('meme-popup');
-      const img = document.getElementById('meme-img');
-      const cap = document.getElementById('meme-caption');
-      popup.style.display = 'block';
-      popup.style.borderColor = opt.cssColor;
-      img.src = opt.mediaUrl;
-      cap.textContent = opt.caption;
-
-      gsap.fromTo(popup, { scale: 0.5, rotation: -6, opacity: 0 }, { scale: 1, rotation: 0, opacity: 1, duration: 0.4, ease: 'back.out(2.2)' });
-      gsap.fromTo(coreMesh.scale, { x: 0.7, y: 0.7, z: 0.7 }, { x: 1.15, y: 1.15, z: 1.15, duration: 0.35, yoyo: true, repeat: 1, ease: 'power2.out' });
-      gsap.to(camera.position, { z: opt.camZ, duration: 0.6, ease: 'power2.out' });
+    function coreMatColor(hex) {
+      coreMesh.material.color.setHex(hex);
+      pillars.forEach(p => p.material.color.setHex(hex));
     }
+
+    // GAS 시트로 전송하는 핵심 함수 (no-cors 방식으로 CORS 차단 우회)
+    window.submitToSheet = async function() {
+      const studentId = document.getElementById('student-id').value.trim();
+      const studentName = document.getElementById('student-name').value.trim();
+      const btn = document.getElementById('submit-btn');
+
+      if (!studentId || !studentName) {
+        alert("학번과 이름을 모두 입력해 주세요.");
+        return;
+      }
+      if (lastSelectedLabel === "미선택") {
+        alert("먼저 위 입장을 하나 이상 선택해 주세요.");
+        return;
+      }
+      if (!GAS_WEBAPP_URL.startsWith("https://")) {
+        alert("코드 상단의 GAS_WEBAPP_URL에 배포된 웹 앱 주소를 넣어주세요.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = "전송 중...";
+
+      try {
+        await fetch(GAS_WEBAPP_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            studentId,
+            studentName,
+            lessonTag: LESSON_DATA.tag,
+            selectedOption: lastSelectedLabel,
+            score
+          })
+        });
+        document.getElementById('feedback-banner').textContent = `✅ ${studentId} ${studentName} 학생의 선택([${lastSelectedLabel}], ${score}점)이 시트에 기록되었습니다!`;
+        btn.textContent = "제출 완료";
+      } catch (err) {
+        alert("전송 중 오류가 발생했습니다: " + err.message);
+        btn.disabled = false;
+        btn.textContent = "시트로 결과 제출";
+      }
+    };
 
     window.addEventListener('resize', () => {
       camera.aspect = container.clientWidth / container.clientHeight;
